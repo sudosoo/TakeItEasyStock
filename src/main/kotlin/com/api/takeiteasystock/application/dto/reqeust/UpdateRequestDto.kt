@@ -1,9 +1,6 @@
 package com.api.takeiteasystock.application.dto.reqeust
 
-class IncreaseRequestDto (
+class UpdateRequestDto (
     val productId :String,
     val quantity :Int,
-
-) {
-
-}
+)
