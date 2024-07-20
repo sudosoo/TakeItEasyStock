@@ -1,8 +1,8 @@
 package com.api.takeiteasystock.core.util
 
-import ch.qos.logback.core.status.ErrorStatus
 import com.api.takeiteasystock.core.common.dto.BaseListRespV2
 import com.api.takeiteasystock.core.common.dto.BaseResp
+import com.api.takeiteasystock.core.common.enums.ErrorStatus
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 
@@ -18,7 +18,7 @@ interface ResponseEntityCreation {
         )
     }
 
-    fun getRespEntity(resp : Any?, errorStatus : ErrorStatus = ErrorStatus.): ResponseEntity<BaseResp> {
+    fun getRespEntity(resp : Any?, errorStatus : ErrorStatus = ErrorStatus.OK): ResponseEntity<BaseResp> {
         return ResponseEntity.ok(BaseResp(resp))
     }
 }

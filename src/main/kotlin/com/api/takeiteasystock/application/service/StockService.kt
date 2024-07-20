@@ -18,10 +18,24 @@ class StockService(
     override var jpaRepository: JpaRepository<Stock, UUID> = repository
 
     @Transactional
-    fun updateStock(requestDto: UpdateRequestDto) {
-        val stock = repository.findByProductId(UUID.fromString(requestDto.productId))
-        stock.quantity = requestDto.quantity
-        saveModel(stock)
+    fun decrease(requestDto: UpdateRequestDto) {
+
+        requestDto.orderItem.map { item ->
+            val stock = repository.findByProductId(UUID.fromString(item.productId))
+            stock.quantity.minus(item.quantity)
+            saveModel(stock)
+        }
+    }
+
+    // 롤백, 주문 취소에 사용되는 메소드
+    @Transactional
+    fun increase(requestDto: UpdateRequestDto) {
+
+        requestDto.orderItem.map { item ->
+            val stock = repository.findByProductId(UUID.fromString(item.productId))
+            stock.quantity.plus(item.quantity)
+            saveModel(stock)
+        }
     }
 
 
