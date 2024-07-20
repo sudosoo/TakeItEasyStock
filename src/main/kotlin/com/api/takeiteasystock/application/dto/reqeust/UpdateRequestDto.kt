@@ -1,13 +1,13 @@
 package com.api.takeiteasystock.application.dto.reqeust
 
 class UpdateRequestDto (
-    val orderId: String? = null,
+    val orderOwner: String? = null,
     val shippingAddress: String? = null,
-    val customerName: String? = null,
-    val orderItem: List<OrderItem>,
+    val shippingMemo: String? = null,
+    val product: List<Product>,
 )
 {
-    class OrderItem(
+    class Product(
         val productId: String,
         val quantity: Int
     )
