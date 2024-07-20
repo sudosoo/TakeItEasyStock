@@ -5,10 +5,6 @@ class UpdateRequestDto (
     val shippingAddress: String? = null,
     val shippingMemo: String? = null,
     val product: List<Product>,
-)
-{
-    class Product(
-        val productId: String,
-        val quantity: Int
-    )
+) {
+    class Product(val productId: String, val quantity: Int)
 }
