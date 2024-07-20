@@ -13,7 +13,7 @@ class Stock {
     var id: UUID? = null
     var productId:UUID? = null
     var productName: String? = null
-    var quantity: Int? = null
+    var quantity: Int = 0
     var description: String? = null
     var isDeleted: Boolean = false
 }

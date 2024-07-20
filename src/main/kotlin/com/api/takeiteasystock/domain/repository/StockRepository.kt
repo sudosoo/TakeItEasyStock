@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface StockRepository :JpaRepository<Stock, UUID> {
+    fun findByProductId(productId: UUID): Stock
+
 }

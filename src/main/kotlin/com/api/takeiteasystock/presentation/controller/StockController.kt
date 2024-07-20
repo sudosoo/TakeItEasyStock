@@ -15,8 +15,7 @@ class StockController (
     //TODO 상품 서비스 api 로 상품 정보를 가져와서 재고를 동기화 하는 로직을 작성해주세요.
     }
 
-    fun increaseStock() {}
-    fun decreaseStock() {}
+    fun updateStock() {}
 
 
 }
