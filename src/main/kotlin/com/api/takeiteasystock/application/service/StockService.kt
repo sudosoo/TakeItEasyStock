@@ -20,7 +20,6 @@ class StockService(
     private val repository: StockRepository,
 ):JpaService<Stock, UUID> {
 
-
     override var jpaRepository: JpaRepository<Stock, UUID> = repository
 
     fun decrease(requestDto: UpdateRequestDto) {
@@ -44,7 +43,6 @@ class StockService(
         val stock = req.toEntity()
         saveModel(stock)
     }
-
 
     fun update(req: UpdateProductRequestDto) {
         val stock = repository.findByProductId(UUID.fromString(req.productId))
