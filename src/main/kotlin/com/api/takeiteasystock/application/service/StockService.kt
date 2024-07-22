@@ -1,5 +1,7 @@
 package com.api.takeiteasystock.application.service
 
+import com.api.takeiteasystock.application.dto.reqeust.RegisterProductRequestDto
+import com.api.takeiteasystock.application.dto.reqeust.UpdateProductRequestDto
 import com.api.takeiteasystock.application.dto.reqeust.UpdateRequestDto
 import com.api.takeiteasystock.core.util.JpaService
 import com.api.takeiteasystock.domain.entity.Stock
@@ -16,28 +18,12 @@ import java.util.*
 @Service
 class StockService(
     private val repository: StockRepository,
-    private val objectMapper: ObjectMapper
 ):JpaService<Stock, UUID> {
 
 
     override var jpaRepository: JpaRepository<Stock, UUID> = repository
 
-    @Transactional
-    @KafkaListener(topics = ["order"], groupId = "stock-group")
-    fun listen(record: ConsumerRecord<String, String>) {
-        when (record.key()){
-            "ORDER_COMPLETED" -> {
-                val requestDto = objectMapper.readValue(record.value(), UpdateRequestDto::class.java)
-                decrease(requestDto)
-            }
-            "ORDER_CANCEL" -> {
-                val requestDto = objectMapper.readValue(record.value(), UpdateRequestDto::class.java)
-                increase(requestDto)
-            }
-        }
-    }
-
-    private fun decrease(requestDto: UpdateRequestDto) {
+    fun decrease(requestDto: UpdateRequestDto) {
         requestDto.product.map { item ->
             val stock = repository.findByProductId(UUID.fromString(item.productId))
             stock.quantity.minus(item.quantity)
@@ -54,7 +40,15 @@ class StockService(
         }
     }
 
-    //TODO 상품 업데이트 (생성,수정) 동기화 해주는 메소드 추가
+    fun register(req: RegisterProductRequestDto) {
+        val stock = req.toEntity()
+        saveModel(stock)
+    }
 
+
+    fun update(req: UpdateProductRequestDto) {
+        val stock = repository.findByProductId(UUID.fromString(req.productId))
+        saveModel(stock)
+    }
 
 }
