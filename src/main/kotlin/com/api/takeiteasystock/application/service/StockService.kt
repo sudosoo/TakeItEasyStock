@@ -44,6 +44,7 @@ class StockService(
             saveModel(stock)
         }
     }
+
     // 롤백, 주문 취소에 사용되는 메소드
     fun increase(requestDto: UpdateRequestDto) {
         requestDto.product.map { item ->
@@ -53,6 +54,7 @@ class StockService(
         }
     }
 
+    //TODO 상품 업데이트 (생성,수정) 동기화 해주는 메소드 추가
 
 
 }

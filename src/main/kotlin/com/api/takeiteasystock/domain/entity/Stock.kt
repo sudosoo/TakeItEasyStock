@@ -7,13 +7,13 @@ import org.hibernate.annotations.UuidGenerator
 import java.util.*
 
 @Entity
-class Stock {
+class Stock(
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
-    var id: UUID? = null
-    var productId:UUID? = null
-    var productName: String? = null
-    var quantity: Int = 0
-    var description: String? = null
-    var isDeleted: Boolean = false
+    var id: UUID? = null,
+    var productId: UUID? = null,
+    var productName: String? = null,
+    var quantity: Int = 0,
+    var description: String? = null,
+    ){
 }
