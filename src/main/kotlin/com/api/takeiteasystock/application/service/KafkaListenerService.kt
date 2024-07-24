@@ -5,12 +5,15 @@ import com.api.takeiteasystock.application.dto.reqeust.UpdateProductRequestDto
 import com.api.takeiteasystock.application.dto.reqeust.UpdateRequestDto
 import com.api.takeiteasystock.domain.entity.KafkaOperationType.*
 import com.fasterxml.jackson.databind.ObjectMapper
+import lombok.extern.slf4j.Slf4j
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.slf4j.helpers.Reporter.info
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Slf4j
 class KafkaListenerService(
     val stockService: StockService,
     private val objectMapper: ObjectMapper
@@ -23,10 +26,12 @@ class KafkaListenerService(
             PRODUCT_CREATE.name -> {
                 val requestDto = objectMapper.readValue(record.value(), RegisterProductRequestDto::class.java)
                 stockService.register(requestDto)
+                info("Successfully registered product: $requestDto")
             }
             PRODUCT_UPDATE.name -> {
                 val requestDto = objectMapper.readValue(record.value(), UpdateProductRequestDto::class.java)
                 stockService.update(requestDto)
+                info("Successfully updated product: $requestDto")
             }
         }
     }
@@ -38,10 +43,12 @@ class KafkaListenerService(
             ORDER_COMPLETED.name -> {
                 val requestDto = objectMapper.readValue(record.value(), UpdateRequestDto::class.java)
                 stockService.decrease(requestDto)
+                info("Successfully decreased stock: $requestDto")
             }
             ORDER_CANCELLED.name -> {
                 val requestDto = objectMapper.readValue(record.value(), UpdateRequestDto::class.java)
                 stockService.increase(requestDto)
+                info("Successfully increased stock: $requestDto")
             }
         }
     }

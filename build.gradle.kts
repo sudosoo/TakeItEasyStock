@@ -38,6 +38,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.kafka:spring-kafka-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter")
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+    runtimeOnly("com.h2database:h2")
 }
 
 kotlin {
