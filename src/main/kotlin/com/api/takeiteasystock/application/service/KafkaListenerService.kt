@@ -1,5 +1,6 @@
 package com.api.takeiteasystock.application.service
 
+import com.api.takeiteasystock.application.dto.reqeust.OrderRequestDto
 import com.api.takeiteasystock.application.dto.reqeust.RegisterProductRequestDto
 import com.api.takeiteasystock.application.dto.reqeust.UpdateProductRequestDto
 import com.api.takeiteasystock.application.dto.reqeust.UpdateRequestDto
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @Slf4j
 class KafkaListenerService(
     val stockService: StockService,
-    private val objectMapper: ObjectMapper
+    val objectMapper: ObjectMapper
 ) {
 
     @Transactional
@@ -37,7 +38,7 @@ class KafkaListenerService(
     }
 
     @Transactional
-    @KafkaListener(topics = ["order"], groupId = "stock-group")
+    @KafkaListener(topics = ["ORDER"], groupId = "stock-group")
     fun orderListener(record: ConsumerRecord<String, String>) {
         when (record.key()){
             ORDER_COMPLETED.name -> {

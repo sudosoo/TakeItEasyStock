@@ -42,6 +42,8 @@ dependencies {
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter")
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
     runtimeOnly("com.h2database:h2")
+
+    implementation ("io.github.microutils:kotlin-logging:3.0.5")
 }
 
 kotlin {

@@ -3,7 +3,7 @@ package com.api.takeiteasystock.application.dto.reqeust
 import com.api.takeiteasystock.domain.entity.Stock
 import java.util.*
 
-class RegisterProductRequestDto (
+data class RegisterProductRequestDto (
     val productId: String,
     val productName:String,
     val quantity: Int
