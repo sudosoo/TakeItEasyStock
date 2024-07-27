@@ -21,8 +21,8 @@ import java.util.*
 class StockService(
     private val repository: StockRepository,
 ):JpaService<Stock, UUID> {
-
     val log = KotlinLogging.logger {}
+    //중복 요청 방지 처리
     override var jpaRepository: JpaRepository<Stock, UUID> = repository
 
     fun decrease(requestDto: UpdateRequestDto) {
@@ -34,7 +34,7 @@ class StockService(
         }
     }
 
-    // 롤백, 주문 취소에 사용되는 메소드
+    // 롤백, 주문 취소에 사용 됌
     fun increase(requestDto: UpdateRequestDto) {
         requestDto.products.map { item ->
             val stock = repository.findByProductId(UUID.fromString(item.productId))
@@ -42,7 +42,9 @@ class StockService(
             saveModel(stock)
             log.info("stock increase : $stock")
         }
+
     }
+
 
     fun register(req: RegisterProductRequestDto) {
         val stock = req.toEntity()

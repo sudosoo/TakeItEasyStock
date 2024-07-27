@@ -19,6 +19,7 @@ class KafkaListenerService(
     val stockService: StockService,
     val objectMapper: ObjectMapper
 ) {
+    //TODO 이벤트 id를 받아서 요청을 멱등성 있게 처리 해야 함
 
     @Transactional
     @KafkaListener(topics = ["product"], groupId = "stock-group")
